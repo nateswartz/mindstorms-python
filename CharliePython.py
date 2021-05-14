@@ -15,10 +15,22 @@ def getRandomNumber():
 def turnLightMatrixOn(isRandomPattern):
     for x in range(5):
         for y in range(5):
-            brightness = 100
-            if (isRandomPattern):
-                brightness = random.randint(0, 2) * 100 
-            hub.light_matrix.set_pixel(x, y, brightness)
+            hub.light_matrix.set_pixel(x, y)
+
+def setLightMatrixToRandomEvenDistribution():
+    hub.light_matrix.off()
+    led_state = [ [0]*5 for _ in range(5) ]
+    lit_count = 0
+    hub.speaker.beep()
+    while (lit_count < 12):
+        x = random.randint(0,4)
+        y = random.randint(0,4)
+        if (led_state[x][y] != 1):
+            led_state[x][y] = 1
+            lit_count += 1
+    for x in range(5):
+        for y in range(5):
+            hub.light_matrix.set_pixel(x, y, led_state[x][y]*100)
 
 
 # Create your objects here.
@@ -32,5 +44,5 @@ while True:
     hub.light_matrix.off()
     hub.left_button.wait_until_released()
     hub.status_light.on(getRandomColor())
-    turnLightMatrixOn(True)
+    setLightMatrixToRandomEvenDistribution()
         
