@@ -12,20 +12,20 @@ last_direction = 'none'
 def is_section_valid(section):
     return section[0] >= 0 and section[0] < 5 and section[1] >= 0 and section[1] < 5
 
-def draw_snake_section(coordinates, charlie_transform):
+def draw_snake_section(coordinates, brightness, charlie_transform):
     start_x = 0
     start_y = 0
     if charlie_transform:
         temp_x = coordinates[1]
         start_y = 4 - coordinates[0]
         start_x = temp_x
-    hub.light_matrix.set_pixel(start_x, start_y)
+    hub.light_matrix.set_pixel(start_x, start_y, brightness)
 
 def draw_snake(charlie_transform):
     hub.light_matrix.off()
-    draw_snake_section(snake_head, charlie_transform)
-    draw_snake_section(snake_mid, charlie_transform)
-    draw_snake_section(snake_tail, charlie_transform)
+    draw_snake_section(snake_head, 100, charlie_transform)
+    draw_snake_section(snake_mid, 90, charlie_transform)
+    draw_snake_section(snake_tail, 80, charlie_transform)
 
 def is_reverse(direction, last_direction):
     if direction == 'right' and last_direction == 'left':
@@ -78,7 +78,9 @@ def try_move_snake(direction):
     return False
 
 def snake_travel(direction):
-    try_move_snake(direction)
+    success = try_move_snake(direction)
+    if not success:
+        return
     draw_snake(True)
     wait_for_seconds(0.8)
 
