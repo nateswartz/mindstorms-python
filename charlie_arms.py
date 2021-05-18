@@ -31,13 +31,16 @@ def charlie_happy():
 hub = MSHub()
 right_arm = Motor('B')
 left_arm = Motor('F')
+arms = MotorPair('B', 'F')
 
 
 # Write your program here.
 charlie_happy()
 hub.speaker.beep()
-wave_arm(right_arm, 4, 100, 80)
-wave_arm(left_arm, 4, 260, 80)
+arms.move(-80, 'degrees', 0, 80)
+arms.move(80, 'degrees', 0, 80)
+wave_arm(right_arm, 2, 100, 80)
+wave_arm(left_arm, 2, 260, 80)
 
 
 # Reset to neutral
