@@ -5,7 +5,7 @@ import math
 import random
 
 hub = MSHub()
-snake_head = (3, 0)
+snake_head = (3, 0) 
 snake_front_mid = (2, 0)
 snake_back_mid = (1, 0)
 snake_tail = (0, 0)
@@ -15,7 +15,7 @@ def main():
     hub.speaker.beep()
     while True:
         reset_snake()
-        start()
+        begin_snake_movement()
 
 def reset_snake():
     global snake_head
@@ -30,23 +30,13 @@ def reset_snake():
     snake_tail = (0, 0)
     last_direction = 'right'
 
-def start():
+def begin_snake_movement():
     draw_snake(True)
     wait_for_seconds(0.8)
     failed_move_attempts = 0
 
     while True:
-        random_number = random.randint(0, 3)
-        direction = 'none'
-        if (random_number == 0):
-            direction = 'right'
-        if (random_number == 1):
-            direction = 'left'
-        if (random_number == 2):
-            direction = 'up'
-        if (random_number == 3):
-            direction = 'down'
-        success = snake_travel(direction)
+        success = snake_travel(get_random_direction())
         if not success:
             failed_move_attempts += 1
         else:
@@ -59,17 +49,30 @@ def start():
             hub.light_matrix.off()
             return
 
-def draw_snake(charlie_transform):
-    hub.light_matrix.off()
-    draw_snake_section(snake_head, 100, charlie_transform)
-    draw_snake_section(snake_front_mid, 90, charlie_transform)
-    draw_snake_section(snake_back_mid, 80, charlie_transform)
-    draw_snake_section(snake_tail, 70, charlie_transform)
+def get_random_direction():
+    random_number = random.randint(0, 3)
+    direction = 'none'
+    if (random_number == 0):
+        direction = 'right'
+    if (random_number == 1):
+        direction = 'left'
+    if (random_number == 2):
+        direction = 'up'
+    if (random_number == 3):
+        direction = 'down'
+    return direction
 
-def draw_snake_section(coordinates, brightness, charlie_transform):
+def draw_snake(hub_sideways):
+    hub.light_matrix.off()
+    draw_snake_section(snake_head, 100, hub_sideways)
+    draw_snake_section(snake_front_mid, 90, hub_sideways)
+    draw_snake_section(snake_back_mid, 80, hub_sideways)
+    draw_snake_section(snake_tail, 70, hub_sideways)
+
+def draw_snake_section(coordinates, brightness, hub_sideways):
     start_x = 0
     start_y = 0
-    if charlie_transform:
+    if hub_sideways:
         temp_x = coordinates[1]
         start_y = 4 - coordinates[0]
         start_x = temp_x
