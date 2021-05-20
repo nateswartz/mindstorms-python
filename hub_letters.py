@@ -17,15 +17,6 @@ def draw_letter(letter, brightness):
         hub.light_matrix.set_pixel(3, 4, brightness)
         hub.light_matrix.set_pixel(4, 1, brightness)
         hub.light_matrix.set_pixel(4, 4, brightness)
-    if (letter == 'l'):
-        hub.light_matrix.set_pixel(0, 4, brightness)
-        hub.light_matrix.set_pixel(1, 4, brightness)
-        hub.light_matrix.set_pixel(2, 4, brightness)
-        hub.light_matrix.set_pixel(3, 4, brightness)
-        hub.light_matrix.set_pixel(4, 1, brightness)
-        hub.light_matrix.set_pixel(4, 2, brightness)
-        hub.light_matrix.set_pixel(4, 3, brightness)
-        hub.light_matrix.set_pixel(4, 4, brightness)
     if (letter == 'b'):
         hub.light_matrix.set_pixel(0, 2, brightness)
         hub.light_matrix.set_pixel(0, 3, brightness)
@@ -40,6 +31,61 @@ def draw_letter(letter, brightness):
         hub.light_matrix.set_pixel(4, 2, brightness)
         hub.light_matrix.set_pixel(4, 3, brightness)
         hub.light_matrix.set_pixel(4, 4, brightness)
+    if (letter == 'c'):
+        hub.light_matrix.set_pixel(0, 1, brightness)
+        hub.light_matrix.set_pixel(0, 2, brightness)
+        hub.light_matrix.set_pixel(0, 3, brightness)
+        hub.light_matrix.set_pixel(1, 4, brightness)
+        hub.light_matrix.set_pixel(2, 4, brightness)
+        hub.light_matrix.set_pixel(3, 4, brightness)
+        hub.light_matrix.set_pixel(4, 1, brightness)
+        hub.light_matrix.set_pixel(4, 2, brightness)
+        hub.light_matrix.set_pixel(4, 3, brightness)
+    if (letter == 'd'):
+        hub.light_matrix.set_pixel(0, 2, brightness)
+        hub.light_matrix.set_pixel(0, 3, brightness)
+        hub.light_matrix.set_pixel(0, 4, brightness)
+        hub.light_matrix.set_pixel(1, 1, brightness)
+        hub.light_matrix.set_pixel(1, 4, brightness)
+        hub.light_matrix.set_pixel(2, 1, brightness)
+        hub.light_matrix.set_pixel(2, 4, brightness)
+        hub.light_matrix.set_pixel(3, 1, brightness)
+        hub.light_matrix.set_pixel(3, 4, brightness)
+        hub.light_matrix.set_pixel(4, 2, brightness)
+        hub.light_matrix.set_pixel(4, 3, brightness)
+        hub.light_matrix.set_pixel(4, 4, brightness)
+    if (letter == 'l'):
+        hub.light_matrix.set_pixel(0, 4, brightness)
+        hub.light_matrix.set_pixel(1, 4, brightness)
+        hub.light_matrix.set_pixel(2, 4, brightness)
+        hub.light_matrix.set_pixel(3, 4, brightness)
+        hub.light_matrix.set_pixel(4, 1, brightness)
+        hub.light_matrix.set_pixel(4, 2, brightness)
+        hub.light_matrix.set_pixel(4, 3, brightness)
+        hub.light_matrix.set_pixel(4, 4, brightness)
+    if (letter == 'n'):
+        hub.light_matrix.set_pixel(0, 0, brightness)
+        hub.light_matrix.set_pixel(0, 4, brightness)
+        hub.light_matrix.set_pixel(1, 0, brightness)
+        hub.light_matrix.set_pixel(1, 3, brightness)
+        hub.light_matrix.set_pixel(1, 4, brightness)
+        hub.light_matrix.set_pixel(2, 0, brightness)
+        hub.light_matrix.set_pixel(2, 2, brightness)
+        hub.light_matrix.set_pixel(2, 4, brightness)
+        hub.light_matrix.set_pixel(3, 0, brightness)
+        hub.light_matrix.set_pixel(3, 1, brightness)
+        hub.light_matrix.set_pixel(3, 4, brightness)
+        hub.light_matrix.set_pixel(4, 0, brightness)
+        hub.light_matrix.set_pixel(4, 4, brightness)
+    if (letter == 'y'):
+        hub.light_matrix.set_pixel(0, 0, brightness)
+        hub.light_matrix.set_pixel(0, 4, brightness)
+        hub.light_matrix.set_pixel(1, 1, brightness)
+        hub.light_matrix.set_pixel(1, 3, brightness)
+        hub.light_matrix.set_pixel(2, 2, brightness)
+        hub.light_matrix.set_pixel(3, 2, brightness)
+        hub.light_matrix.set_pixel(4, 2, brightness)
+
 
 def fade_letter_in(letter, brightness_increment, time_interval):
     hub.light_matrix.off()
@@ -61,14 +107,18 @@ def show_letter(letter, brightness_change, time_interval):
     fade_letter_in(letter, brightness_change, time_interval)
     fade_letter_out(letter, brightness_change, time_interval)
 
+def show_message(message, brightness_change, time_interval):
+    for letter in message:
+        if letter == ' ':
+            wait_for_seconds(0.5)
+        else:
+            show_letter(letter, brightness_change, time_interval)
+
 # Create your objects here.
 hub = MSHub()
 
 
 # Write your program here.
 hub.speaker.beep()
-show_letter('a', 20, 0.2)
-show_letter('l', 20, 0.2)
-show_letter('b', 20, 0.2)
-show_letter('a', 20, 0.2)
+show_message('alba and clay', 20, 0.15)
 hub.speaker.beep()
