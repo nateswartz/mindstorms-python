@@ -3,36 +3,64 @@ from mindstorms.control import wait_for_seconds, wait_until, Timer
 from mindstorms.operator import greater_than, greater_than_or_equal_to, less_than, less_than_or_equal_to, equal_to, not_equal_to
 import math
 
-def set_leds(led_array, brightness):
-    for x in range(0,5):
+def set_leds(led_array, brightness, sideways):
+    if not sideways:
         for y in range(0,5):
-            if (led_array[x][y] == 1):
-                hub.light_matrix.set_pixel(x, y, brightness)
+            for x in range(0,5):
+                if (led_array[y][x] == 1):
+                    hub.light_matrix.set_pixel(x, y, brightness)
+    else:
+        for x in range(0,5):
+            for y in range(0,5):
+                if (led_array[x][4-y] == 1):
+                    hub.light_matrix.set_pixel(x, y, brightness)
 
 def draw_letter(letter, brightness):
     led_array = [[]]
     if (letter == 'a'):
-        led_array = [[0,0,1,1,0], [0,1,0,0,1], [0,1,1,1,1], [0,1,0,0,1], [0,1,0,0,1]]
+        led_array = [[0,1,1,0,0], 
+                     [1,0,0,1,0], 
+                     [1,1,1,1,0], 
+                     [1,0,0,1,0], 
+                     [1,0,0,1,0]]
     if (letter == 'b'):
-        led_array = [[0,0,1,1,1], [0,1,0,0,1], [0,0,1,1,1], [0,1,0,0,1], [0,0,1,1,1]]
+        led_array = [[1,1,1,0,0], 
+                     [1,0,0,1,0], 
+                     [1,1,1,0,0], 
+                     [1,0,0,1,0], 
+                     [1,1,1,0,0]]
     if (letter == 'c'):
-        led_array = [[0,1,1,1,0], [0,0,0,0,1], [0,0,0,0,1], [0,0,0,0,1], [0,1,1,1,0]]
+        led_array = [[0,1,1,1,0], 
+                     [1,0,0,0,0], 
+                     [1,0,0,0,0], 
+                     [1,0,0,0,0], 
+                     [0,1,1,1,0]]
     if (letter == 'd'):
-        led_array = [[0,0,1,1,1], [0,1,0,0,1], [0,1,0,0,1], [0,1,0,0,1], [0,0,1,1,1]]
+        led_array = [[1,1,1,0,0], 
+                     [1,0,0,1,0], 
+                     [1,0,0,1,0], 
+                     [1,0,0,1,0], 
+                     [1,1,1,0,0]]
     if (letter == 'l'):
-        led_array = [[0,0,0,0,1], [0,0,0,0,1], [0,0,0,0,1], [0,0,0,0,1], [0,1,1,1,1]]
+        led_array = [[1,0,0,0,0], 
+                     [1,0,0,0,0], 
+                     [1,0,0,0,0], 
+                     [1,0,0,0,0], 
+                     [1,1,1,1,0]]
     if (letter == 'n'):
-        led_array = [[1,0,0,0,1], [1,0,0,1,1], [1,0,1,0,1], [1,1,0,0,1], [1,0,0,0,1]]
+        led_array = [[1,0,0,0,1], 
+                     [1,1,0,0,1], 
+                     [1,0,1,0,1], 
+                     [1,0,0,1,1], 
+                     [1,0,0,0,1]]
     if (letter == 'y'):
-        led_array = [[1,0,0,0,1], [0,1,0,1,0], [0,0,1,0,0], [0,0,1,0,0], [0,0,1,0,0]]
+        led_array = [[1,0,0,0,1], 
+                     [0,1,0,1,0], 
+                     [0,0,1,0,0], 
+                     [0,0,1,0,0], 
+                     [0,0,1,0,0]]
 
-    set_leds(led_array, brightness)
-
-def set_leds(led_array, brightness):
-    for x in range(0,5):
-        for y in range(0,5):
-            if (led_array[x][y] == 1):
-                hub.light_matrix.set_pixel(x, y, brightness)
+    set_leds(led_array, brightness, True)
 
 def fade_letter_in(letter, brightness_increment, time_interval):
     hub.light_matrix.off()
