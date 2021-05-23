@@ -4,16 +4,18 @@ from mindstorms.operator import greater_than, greater_than_or_equal_to, less_tha
 import math
 
 def set_leds(led_array, brightness, sideways):
-    if not sideways:
+    for x in range(0,5):
         for y in range(0,5):
-            for x in range(0,5):
+            if not sideways:
                 if (led_array[y][x] == 1):
                     hub.light_matrix.set_pixel(x, y, brightness)
-    else:
-        for x in range(0,5):
-            for y in range(0,5):
+                else:
+                    hub.light_matrix.set_pixel(x, y, 0)
+            else:
                 if (led_array[x][4-y] == 1):
                     hub.light_matrix.set_pixel(x, y, brightness)
+                else:
+                    hub.light_matrix.set_pixel(x, y, 0)
 
 def draw_letter(letter, brightness):
     led_array = [[]]
@@ -60,22 +62,20 @@ def draw_letter(letter, brightness):
                      [0,0,1,0,0], 
                      [0,0,1,0,0]]
 
-    set_leds(led_array, brightness, True)
+    set_leds(led_array, brightness, False)
 
 def fade_letter_in(letter, brightness_increment, time_interval):
-    hub.light_matrix.off()
     brightness = 0
     while (brightness < 100):
-        brightness += brightness_increment
         draw_letter(letter, brightness)
+        brightness += brightness_increment
         wait_for_seconds(time_interval)
 
 def fade_letter_out(letter, brightness_decrement, time_interval):
     brightness = 100
-    draw_letter(letter, brightness)
     while (brightness > 0):
-        brightness -= brightness_decrement
         draw_letter(letter, brightness)
+        brightness -= brightness_decrement
         wait_for_seconds(time_interval)
 
 def show_letter(letter, brightness_change, time_interval):
