@@ -11,11 +11,21 @@ hub = MSHub()
 arm = Motor('C')
 wheels = MotorPair('A', 'B')
 
+# Arms up and down
 arm.run_for_degrees(-60, 20)
 wait_for_seconds(1)
 arm.run_for_degrees(60, 20)
 
-wheels.start()
+# Go straight, back up
+wheels.start(speed=30)
 wait_for_seconds(0.5)
 wheels.stop()
+wheels.start(speed=-30)
+wait_for_seconds(0.5)
+wheels.stop()
+
+# Spin in circles
+wheels.move(2, 'rotations', steering=100)
+wheels.move(2, 'rotations', steering=-100)
+
 hub.speaker.beep()
